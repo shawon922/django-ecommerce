@@ -1,2 +1,2 @@
-# django-boards
-Django board application using django 1.11.7.
+# django-ecommerce
+A simple ecommerce application based on Django 2.0.1
