@@ -1,0 +1,12 @@
+{% extends 'layouts/backend-master.html' %}
+
+{% block content %}
+    <form action="." method="post" novalidate>
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+
+        <input type="submit" class="btn btn-success" value="Save">
+    </form>
+     
+{% endblock content %}
