@@ -21,6 +21,20 @@ class ProductListView(ListView):
     context_object_name = 'products'
 
 
+class ProductFeaturedListView(ListView):
+    model = Product
+    template_name = 'products/featured_index.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        # Using featured query set
+        return self.model.objects.featured()
+        # Using featured manager
+        # return self.model.objects.featured()
+        # Using filter on query set
+        # return self.model.objects.all().filter(featured=True)
+
+
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'products/detail.html'

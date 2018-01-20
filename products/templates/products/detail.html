@@ -20,7 +20,7 @@
                 <th>
                     Price
                 </th>
-                <th>Last Updated</th>                
+                <th>Image</th>                
             </tr>
         </thead>
         <tbody>
@@ -38,7 +38,9 @@
                 </td>
                 <td class="align-middle">{{ product.price }}</td>
                 <td class="align-middle">
-                    
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" height="150" width="150" alt="image">
+                    {% endif %}
                 </td>
             </tr>
 

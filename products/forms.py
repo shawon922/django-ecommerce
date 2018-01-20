@@ -63,11 +63,12 @@ class ProductForm(forms.ModelForm):
             }
         )
     )
-    image = forms.FileField()
+    image = forms.ImageField(required=False)
+    featured = forms.BooleanField(required=False, widget=forms.CheckboxInput())
 
     class Meta:
         model = Product 
-        fields = ['name', 'description', 'price', 'image', 'category']
+        fields = ['name', 'description', 'price', 'image', 'featured', 'category']
 
 
     def clean(self, *args, **kwargs):
