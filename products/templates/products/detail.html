@@ -1,0 +1,47 @@
+{% extends 'layouts/backend-master.html' %} 
+
+{% block title %} 
+    Product Detail 
+{% endblock %} 
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'products:index' %}">Products</a>
+    </li>
+    <li class="breadcrumb-item active">Product detail</li>
+{% endblock %}
+
+{% block content %}
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>
+                    Price
+                </th>
+                <th>Last Updated</th>                
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>
+                    <a href="#">
+                        {{ product.name }}
+                    </a>
+
+                    <small class="text-muted d-block">{{ product.description }}</small>
+                </td>
+                <td class="align-middle">
+                    {{ product.category.name }}
+                </td>
+                <td class="align-middle">{{ product.price }}</td>
+                <td class="align-middle">
+                    
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+{% endblock %}

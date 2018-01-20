@@ -1,21 +1,34 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import response
+from django.views.generic import ListView, DetailView
 
 from categories.models import Category
 from .models import Product
 from .forms import ProductForm
 
-def index(request):
-    products = Product.objects.all()
+# def index(request):
+#     products = Product.objects.all()
 
-    context = {
-        'products': products,
-    }
-    return render(request, 'products/index.html', context)
+#     context = {
+#         'products': products,
+#     }
+#     return render(request, 'products/index.html', context)
+
+
+class ProductListView(ListView):
+    model = Product
+    template_name = 'products/index.html'
+    context_object_name = 'products'
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'products/detail.html'
+    context_object_name = 'product'
 
 
 def create(request):
-    form = ProductForm(request.POST or None)
+    form = ProductForm(request.POST or None, request.FILES or None)
 
     if form.is_valid():
         # cd = form.cleaned_data
@@ -48,7 +61,7 @@ def update(request, pk):
     else:
         product.category = product.category
 
-    form = ProductForm(request.POST or None, instance=product)
+    form = ProductForm(request.POST or None, request.FILES or None, instance=product)
     if form.is_valid():
         product = form.save(commit=False)
         product.save()

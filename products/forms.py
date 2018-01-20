@@ -63,10 +63,11 @@ class ProductForm(forms.ModelForm):
             }
         )
     )
+    image = forms.FileField()
 
     class Meta:
         model = Product 
-        fields = ['name', 'description', 'price', 'category']
+        fields = ['name', 'description', 'price', 'image', 'category']
 
 
     def clean(self, *args, **kwargs):
