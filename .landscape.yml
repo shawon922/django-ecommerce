@@ -1,0 +1,9 @@
+max-line-length: 80
+uses:
+  - django
+autodetect: true
+ignore-paths:
+  - static
+  - templates
+python-targets:
+  - 3

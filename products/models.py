@@ -30,6 +30,7 @@ class ProductManager(models.Manager):
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
     name = models.CharField(max_length=120)
+    slug = models.SlugField(blank=True, unique=True)
     description = models.TextField()
     price = models.DecimalField(decimal_places=2, max_digits=12, default=0.00)
     image = models.ImageField(upload_to=upload_location, null=True, blank=True)

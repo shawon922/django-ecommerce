@@ -44,6 +44,14 @@ class ProductForm(forms.ModelForm):
             }
         )
     )
+    slug = forms.SlugField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Enter the slug'
+            }
+        )
+    )
     description = forms.CharField(
         widget=forms.Textarea(
             attrs={
@@ -64,11 +72,15 @@ class ProductForm(forms.ModelForm):
         )
     )
     image = forms.ImageField(required=False)
-    featured = forms.BooleanField(required=False, widget=forms.CheckboxInput())
+    featured = forms.BooleanField(
+        required=False, 
+        widget=forms.CheckboxInput()
+    )
 
     class Meta:
         model = Product 
-        fields = ['name', 'description', 'price', 'image', 'featured', 'category']
+        fields = ['name', 'slug', 'description',
+                  'price', 'image', 'featured', 'category']
 
 
     def clean(self, *args, **kwargs):
