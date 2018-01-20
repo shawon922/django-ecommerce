@@ -21,7 +21,7 @@ class CategoryForm(forms.ModelForm):
         )
     )
     parent = forms.ChoiceField(
-        choices=[('', '--Select Parent Category--')] + list(Category.objects.values_list('id', 'name')), 
+        choices=[('', '--Select Parent Category--')] + list(Category.objects.filter(parent=None).values_list('id', 'name')), 
         required=False, 
         label='Parent Category',
         widget=forms.Select(attrs={'class': 'form-control'})
@@ -36,4 +36,6 @@ class CategoryForm(forms.ModelForm):
 
         if not parent:
             self.cleaned_data['parent'] = None
+        else:
+            self.cleaned_data['parent'] = Category.objects.get(id=parent)
         return super(CategoryForm, self).clean(*args, **kwargs)

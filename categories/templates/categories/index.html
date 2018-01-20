@@ -1,0 +1,46 @@
+{% extends 'layouts/backend-master.html' %}
+
+{% block title %}
+    Category List
+{% endblock %}
+
+{% block breadcrumb %} 
+    <li class="breadcrumb-item active">Categories</li>
+{% endblock %}
+
+{% block content %}
+    
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Category Name</th>
+                <th>Products</th>
+                <th>Latest Product</th>
+                <th class="text-right"><a href="{% url 'categories:create' %}" class="btn btn-primary">Add Category</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td>
+                        <a href="#">
+                            {{ category.name }}
+                        </a>
+
+                        <small class="text-muted d-block">{{ category.description }}</small>
+                    </td>
+                    <td class="align-middle">
+                        {{ category.products.count }}
+                        {{ category.products.query }}
+                    </td>
+                    <td class="align-middle">-</td>
+                    <td class="align-middle">
+                        <a href="{% url 'categories:update' category.pk %}" class="btn btn-primary">Edit</a>
+                    </td>
+                </tr>
+            
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock content %}

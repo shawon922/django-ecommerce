@@ -1,7 +1,7 @@
 {% extends 'layouts/backend-master.html' %}
 
 {% block title %}
-    Add New Category
+    Edit Category
 {% endblock %}
 
 {% block breadcrumb %}
@@ -9,7 +9,7 @@
         <a href="{% url 'categories:index' %}">Categories</a>
     </li>
     <li class="breadcrumb-item active">
-        Add new category
+        Edit category
     </li>
 {% endblock %}
 
@@ -19,7 +19,7 @@
         
         {% include 'includes/backend/form.html' %}
 
-        <input type="submit" class="btn btn-success" value="Save">
+        <input type="submit" class="btn btn-success" value="Update">
     </form>
      
 {% endblock content %}

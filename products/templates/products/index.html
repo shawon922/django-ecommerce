@@ -1,0 +1,63 @@
+{% extends 'layouts/backend-master.html' %}
+
+{% block title %}
+    Product List
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Products</li>
+{% endblock %}
+
+{% block content %}
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Last Updated</th>
+                <th class="text-right">
+                    <a href="{% url 'products:create' %}" class="btn btn-primary">Add Product</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>
+                    <a href="#">
+                        {{ product.name }}
+                    </a>
+    
+                    <small class="text-muted d-block">{{ product.description }}</small>
+                </td>
+                <td class="align-middle">
+                    {{ product.category.name }}
+                </td>
+                <td class="align-middle">-</td>
+                <td class="align-middle">
+                    <a href="{% url 'products:update' product.pk %}" class="btn btn-primary">Edit</a>
+
+                    <form class="class_product_delete_form" style="display: inline;" action="{% url 'products:delete' product.pk %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Delete" class="btn btn-danger class_product_delete_btn">
+                    </form>                    
+                </td>
+            </tr>
+    
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block script-extra %}
+    <script>
+        $(document).ready(function() {
+            $('.class_product_delete_btn').on('click', function(event) {
+                event.preventDefault();
+                if (confirm('Are you sure?')) {
+                    $(this).parent('form').submit();
+                }
+            });
+        });
+    </script>
+{% endblock %}

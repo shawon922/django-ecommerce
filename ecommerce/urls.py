@@ -18,12 +18,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include 
-from .views import home
+from .views import home, backend_home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('category/', include('categories.urls', namespace='category')),
+    path('backend/', backend_home, name='backend_home'),
+    path('backend/categories/', include('categories.urls', namespace='categories')),
+    path('backend/products/', include('products.urls', namespace='products')),
 ]
 
 # if settings.DEBUG:

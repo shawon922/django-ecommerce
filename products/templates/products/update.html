@@ -1,0 +1,61 @@
+{% extends 'layouts/backend-master.html' %}
+
+{% block title %}
+    Add new product
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'products:index' %}">Products</a></li>
+    <li class="breadcrumb-item active">Edit product</li>
+{% endblock %}
+
+{% block content %}
+    <form action="." method="post" novalidate>
+        {% csrf_token %}
+
+        {% include 'includes/backend/form.html' %}
+
+        <input type="submit" class="btn btn-success" value="Save">
+    </form>
+{% endblock %}
+
+{% block script-extra %} 
+    <script>
+        $(document).ready(function() {
+            $('#id_category').on('change', function() {
+                var url = "{% url 'products:subcategory' %}";
+                var catId = $(this).val()
+                var catName = $(this).find(':selected').text();
+                //console.log($(this));
+
+                var postData = {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'parent': catId
+                };
+
+                if (catId) {
+                    var options = '';
+                    $.post(url, postData, function(data, textStatus, xhr) {
+                        if (xhr.status == 200) {
+                            options = '<option value="">--Select Sub Category--</option>';
+                            if (data.length > 0) {
+                                $.each(data, function(key, value) {
+                                    options += '<option value="'+ value.id +'">'+ value.name +'</option>';
+                                    //console.log(value);
+                                });
+                                //console.log(data);
+                            } else {
+                                options += '<option selected="" value="' + catId + '">' + catName + '</option>';
+                            }
+
+                            $('#id_sub_category').html(options);
+                        }
+                        //console.log(options);
+                    });
+                }
+                
+                
+            });
+        });
+    </script>
+{% endblock %}

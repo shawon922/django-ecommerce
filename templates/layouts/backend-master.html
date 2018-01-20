@@ -22,7 +22,7 @@
         {% block body %}
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="{% url 'home' %}">Web Shop</a>
+                <a class="navbar-brand" href="{% url 'backend_home' %}">Web Shop</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -72,6 +72,10 @@
         <script src="{% static 'backend/js/jquery-3.2.1.js' %}"></script>
         <script src="{% static 'backend/js/popper.js' %}"></script>
         <script src="{% static 'backend/css/bootstrap-4.0.0-beta/js/bootstrap.min.js' %}"></script>
+    
+        {% block script-extra %}
+
+        {% endblock %}
     </body>
 
 </html>
