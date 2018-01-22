@@ -36,10 +36,10 @@
                 </td>
                 <td class="align-middle">-</td>
                 <td class="align-middle">
-                    <a href="{% url 'products:update' product.pk %}" class="btn btn-primary">Edit</a>
-                    <a href="{% url 'products:detail' product.pk %}" class="btn btn-info">Detail</a>
+                    <a href="{% url 'products:update' product.slug %}" class="btn btn-primary">Edit</a>
+                    <a href="{{ product.get_absolute_url }}" class="btn btn-info">Detail</a>
 
-                    <form class="class_product_delete_form" style="display: inline;" action="{% url 'products:delete' product.pk %}" method="post">
+                    <form class="class_product_delete_form" style="display: inline;" action="{% url 'products:delete' product.slug %}" method="post">
                         {% csrf_token %}
                         <input type="submit" value="Delete" class="btn btn-danger class_product_delete_btn">
                     </form>                    

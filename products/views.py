@@ -66,8 +66,8 @@ def create(request):
     return render(request, 'products/create.html', context)
 
 
-def update(request, pk):
-    product = get_object_or_404(Product, pk=pk)
+def update(request, slug):
+    product = get_object_or_404(Product, slug=slug)
     # sub_category = product.category
     product.sub_category = product.category
     if product.category.parent:
@@ -87,9 +87,9 @@ def update(request, pk):
     return render(request, 'products/update.html', context)
 
 
-def delete(request, pk):
+def delete(request, slug):
     if request.method == 'POST':
-        product = get_object_or_404(Product, pk=pk)
+        product = get_object_or_404(Product, slug=slug)
         product.delete()
         return redirect('products:index')
     else:
