@@ -23,7 +23,7 @@
                                     <!-- Start product category -->
                                     {% for parent in categories %}
                                         {% with parent_id=parent.id %}
-                                            <div class="tab-pane fade in {% if forloop.counter == 1 %}active{% endif %}" id="{{ parent.name|lower|cut:' ' }}">
+                                            <div class="product-tab-pane tab-pane fade in {% if forloop.counter == 1 %}active{% endif %}" id="{{ parent.name|lower|cut:' ' }}">
                                                 
                                                 {% if products|dictvalue:parent_id %}
                                                     <ul class="aa-product-catg">

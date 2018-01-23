@@ -1047,12 +1047,12 @@ img {
   width: 100%;
 }
 
-#aa-product .aa-product-area .aa-product-inner #men {
+#aa-product .aa-product-area .aa-product-inner .product-tab-pane {
 	margin-left: -55px;
   text-align: center;
   padding-bottom: 35px;
 }
-#aa-product .aa-product-area .aa-product-inner #electronics {
+/* #aa-product .aa-product-area .aa-product-inner #electronics {
 	margin-left: -55px;
   text-align: center;
   padding-bottom: 35px;
@@ -1067,7 +1067,7 @@ img {
 	margin-left: -55px;
   text-align: center;
   padding-bottom: 35px;
-}
+} */
 
 .aa-product-nav {
   display: inline-block;

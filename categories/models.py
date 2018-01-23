@@ -9,5 +9,9 @@ class Category(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['id']
+    
+    
     def __str__(self):
         return self.name
