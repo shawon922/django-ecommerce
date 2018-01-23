@@ -1,16 +1,25 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView
 
 from .models import Category 
 from .forms import CategoryForm
 
 
-def index(request):
-    categories = Category.objects.all()
+# def index(request):
+#     categories = Category.objects.all()
 
-    context = {
-        'categories': categories,
-    }
-    return render(request, 'categories/index.html', context)
+#     context = {
+#         'categories': categories,
+#     }
+#     return render(request, 'categories/index.html', context)
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'categories/index.html'
+    context_object_name = 'categories'
+    paginate_by = 10
+
 
 def create(request):
     form = CategoryForm(request.POST or None)

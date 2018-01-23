@@ -19,12 +19,17 @@ class ProductListView(ListView):
     model = Product
     template_name = 'products/index.html'
     context_object_name = 'products'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return self.model.objects.select_related('category').all()
 
 
 class ProductFeaturedListView(ListView):
     model = Product
     template_name = 'products/featured_index.html'
     context_object_name = 'products'
+    paginate_by = 10
 
     def get_queryset(self):
         # Using featured query set

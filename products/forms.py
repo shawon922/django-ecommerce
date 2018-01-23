@@ -85,6 +85,7 @@ class ProductForm(forms.ModelForm):
 
     def clean(self, *args, **kwargs):
         sub_category = self.cleaned_data.get('sub_category')
+        
         if sub_category:
             self.cleaned_data['category'] = Category.objects.get(pk=sub_category)
         else:
