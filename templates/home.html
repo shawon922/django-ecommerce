@@ -21,46 +21,56 @@
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <!-- Start product category -->
-                                    <div class="tab-pane fade in active" id="men">
-                                        <ul class="aa-product-catg">
-                                            <!-- start single product item -->
-                                            <li>
-                                                <figure>
-                                                    <a class="aa-product-img" href="#">
-                                                        <img src="{% static 'frontend/img/man/polo-shirt-2.png' %}" alt="polo shirt img">
-                                                    </a>
-                                                    <a class="aa-add-card-btn" href="#">
-                                                        <span class="fa fa-shopping-cart"></span>Add To Cart</a>
-                                                    <figcaption>
-                                                        <h4 class="aa-product-title">
-                                                            <a href="#">Polo T-Shirt</a>
-                                                        </h4>
-                                                        <span class="aa-product-price">$45.50</span>
-                                                        <span class="aa-product-price">
-                                                            <del>$65.50</del>
-                                                        </span>
-                                                    </figcaption>
-                                                </figure>
-                                                <div class="aa-product-hvr-content">
-                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist">
-                                                        <span class="fa fa-heart-o"></span>
-                                                    </a>
-                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare">
-                                                        <span class="fa fa-exchange"></span>
-                                                    </a>
-                                                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal">
-                                                        <span class="fa fa-search"></span>
-                                                    </a>
-                                                </div>
-                                                <!-- product badge -->
-                                                <span class="aa-badge aa-sale" href="#">SALE!</span>
-                                            </li>
+                                    {% for parent in categories %}
+                                    {% with parent_id=parent.id %}
+                                    <div class="tab-pane fade in {% if forloop.counter == 1 %}active{% endif %}" id="{{ parent.name|lower|cut:' ' }}">
+                                        {{ parent_id }}
+                                        {{ products.parent_id }}
+                                        {% if products.parent_id %}
+                                            <ul class="aa-product-catg">
                                             
-                                        </ul>
-                                        <a class="aa-browse-btn" href="#">Browse all Product
-                                            <span class="fa fa-long-arrow-right"></span>
-                                        </a>
+                                                {% for product in products.parent_id %}
+                                                    <!-- start single product item -->
+                                                    <li>
+                                                        <figure>
+                                                            <a class="aa-product-img" href="#">
+                                                                <img src="{% static 'frontend/img/man/polo-shirt-2.png' %}" alt="polo shirt img">
+                                                            </a>
+                                                            <a class="aa-add-card-btn" href="#">
+                                                                <span class="fa fa-shopping-cart"></span>Add To Cart</a>
+                                                            <figcaption>
+                                                                <h4 class="aa-product-title">
+                                                                    <a href="#">{{ product.name }}</a>
+                                                                </h4>
+                                                                <span class="aa-product-price">${{ product.price }}</span>
+                                                                
+                                                            </figcaption>
+                                                        </figure>
+                                                        <div class="aa-product-hvr-content">
+                                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist">
+                                                                <span class="fa fa-heart-o"></span>
+                                                            </a>
+                                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Compare">
+                                                                <span class="fa fa-exchange"></span>
+                                                            </a>
+                                                            <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal">
+                                                                <span class="fa fa-search"></span>
+                                                            </a>
+                                                        </div>
+                                                        <!-- product badge -->
+                                                        {% if product.featured %}
+                                                        <span class="aa-badge aa-sale" href="#">FEATURED!</span>
+                                                        {% endif %}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                            <a class="aa-browse-btn" href="#">Browse all Product
+                                                <span class="fa fa-long-arrow-right"></span>
+                                            </a>
+                                        {% endif %}
                                     </div>
+                                    {% endwith %}
+                                    {% endfor %}
                                     <!-- product category -->
                                     
                                 </div>
