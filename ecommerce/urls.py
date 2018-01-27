@@ -18,11 +18,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, re_path, include 
-from .views import home, backend_home
+from .views import home, products, CategoryWiseProductListView, backend_home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('products/<category_id>/', CategoryWiseProductListView.as_view(), name='products-list'),
+    path('products/<category_id>/<sub_category_id>/', CategoryWiseProductListView.as_view(), name='products-list'),
+    # path('products/<category_id>/', products, name='products-list'),
+    # path('products/<category_id>/<sub_category_id>/', products, name='products-list'),
     path('backend/', backend_home, name='backend_home'),
     path('backend/categories/', include('categories.urls', namespace='categories')),
     path('backend/products/', include('products.urls', namespace='products')),

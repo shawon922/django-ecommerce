@@ -32,7 +32,7 @@
                                         <ul class="dropdown-menu">
                                             {% for sub_category in sub_categories %}
                                             <li>
-                                                <a href="#">{{ sub_category.name }}</a>
+                                                <a href="{% url 'products-list' parent.id sub_category.id %}">{{ sub_category.name }}</a>
                                             </li>
                                             {% endfor %}
                                             

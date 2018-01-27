@@ -2102,7 +2102,7 @@ img {
   text-align: center;
   width: 100%;
 }
-#aa-product-category .aa-product-catg-content .aa-product-catg-pagination .pagination {
+/* #aa-product-category .aa-product-catg-content .aa-product-catg-pagination .pagination {
   border: 1px solid #ccc;
   border-radius: 0;
 }
@@ -2127,7 +2127,7 @@ img {
 #aa-product-category .aa-product-catg-content .aa-product-catg-pagination .pagination li a:focus,
 #aa-product-category .aa-product-catg-content .aa-product-catg-pagination .pagination li span:focus {
   color: #fff;
-}
+} */
 
 /*==================
  PRODUCT DETAILS PAGE
