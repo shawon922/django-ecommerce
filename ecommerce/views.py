@@ -58,8 +58,13 @@ class CategoryWiseProductListView(ListView):
         return super().get_context_data(*args, **kwargs)
 
     def get_queryset(self):
-        self.categories = Category.objects.prefetch_related('categories').filter(parent=None)
+        self.categories = Category.objects.prefetch_related(
+            'categories').filter(parent=None)
 
+        request = self.request
+        q = request.GET.get('q')
+        print(q)
+        
         category_id = self.kwargs.get('category_id')
         sub_category_id = self.kwargs.get('sub_category_id', None)
 
