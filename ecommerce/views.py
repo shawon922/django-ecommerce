@@ -54,24 +54,36 @@ class CategoryWiseProductListView(ListView):
     context_object_name = 'products'
 
     def get_context_data(self, *args, **kwargs):
+        print(kwargs)
         kwargs['categories'] = self.categories
+        query_string = ''
+        for key, value in self.request.GET.items():
+            if key != 'page':
+                query_string += '&'+key + '=' + value
+        
+        kwargs['category_id'] = self.category_id
+        kwargs['sub_category_id'] = self.sub_category_id
+        kwargs['query_string'] = query_string
+
         return super().get_context_data(*args, **kwargs)
 
     def get_queryset(self):
-        self.categories = Category.objects.prefetch_related(
-            'categories').filter(parent=None)
+        self.categories = Category.objects.prefetch_related('categories').filter(parent=None)
 
-        request = self.request
-        q = request.GET.get('q')
-        print(q)
+        q = self.request.GET.get('q', '')
+        # print(q)
         
-        category_id = self.kwargs.get('category_id')
-        sub_category_id = self.kwargs.get('sub_category_id', None)
+        self.category_id = self.kwargs.get('category_id', None)
+        self.sub_category_id = self.kwargs.get('sub_category_id', None)
 
-        if sub_category_id:
-            queryset = Product.objects.filter(category=sub_category_id).order_by('-updated_at')
+        if self.sub_category_id:
+            queryset = Product.objects.filter(category=self.sub_category_id, name__icontains=q, description__icontains=q)
+        elif self.category_id:
+            queryset = Product.objects.filter(category__parent=self.category_id, name__icontains=q, description__icontains=q)
         else:
-            queryset = Product.objects.filter(category__parent=category_id).order_by('-updated_at')
+            queryset = Product.objects.filter(name__icontains=q, description__icontains=q)
+        
+        queryset = queryset.order_by('-updated_at')
 
         return queryset
 

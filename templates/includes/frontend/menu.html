@@ -20,7 +20,7 @@
                         {% for parent in categories %}
                             <li>
                                 {% with sub_categories=parent.categories.all %}
-                                <a href="#">
+                                <a href="{% if not sub_categories %}{% url 'products-list' parent.id %}{% else %}#{% endif %}">
                                     {{ parent.name }}
                                     {% if sub_categories %}
                                         <span class="caret"></span>

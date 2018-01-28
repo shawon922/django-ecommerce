@@ -155,8 +155,8 @@
                         <!-- / cart box -->
                         <!-- search box -->
                         <div class="aa-search-box">
-                            <form action=".">
-                                <input type="text" name="q" id="search-box" placeholder="Search here ex. 'man' ">
+                            <form action="{% url 'products-list' %}{% if category_id %}{{ category_id }}/{% endif %}{% if sub_category_id %}{{ sub_category_id }}/{% endif %}">
+                                <input type="text" value="{% if request.GET.q %}{{ request.GET.q }}{% endif %}" name="q" id="search-box" placeholder="Search here ex. 'men' ">
                                 <button type="submit">
                                     <span class="fa fa-search"></span>
                                 </button>

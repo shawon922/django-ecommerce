@@ -23,6 +23,7 @@ from .views import home, products, CategoryWiseProductListView, backend_home
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('products/', CategoryWiseProductListView.as_view(), name='products-list'),
     path('products/<category_id>/', CategoryWiseProductListView.as_view(), name='products-list'),
     path('products/<category_id>/<sub_category_id>/', CategoryWiseProductListView.as_view(), name='products-list'),
     # path('products/<category_id>/', products, name='products-list'),
