@@ -28,22 +28,28 @@
           <div class="aa-product-catg-content">
             <div class="aa-product-catg-head">
               <div class="aa-product-catg-head-left">
-                <form action="." class="aa-sort-form">
-                  <label for="">Sort by</label>
-                  <select name="">
-                    <option value="1" selected="Default">Default</option>
-                    <option value="2">Name</option>
-                    <option value="3">Price</option>
-                    <option value="4">Date</option>
-                  </select>
-                </form>
-                <form action="" class="aa-show-form">
-                  <label for="">Show</label>
-                  <select name="">
-                    <option value="1" selected="12">12</option>
-                    <option value="2">24</option>
-                    <option value="3">36</option>
-                  </select>
+                <form action=".">
+                    <div class="aa-sort-form">
+                        <label for="">Sort by</label>
+                        <select name="sort" class="filter-option">
+                            <option value="default" {% if sort == 'default' %}selected=""{% endif %}>Default</option>
+                            <option value="name" {% if sort == 'name' %}selected=""{% endif %}>Name</option>
+                            <option value="price" {% if sort == 'price' %}selected=""{% endif %}>Price</option>
+                            <option value="date" {% if sort == 'date' %}selected=""{% endif %}>Date</option>
+                        </select>
+                    </div>
+                  
+                    <!-- </form>
+                    <form action="." class="aa-show-form"> -->
+                    <div class="aa-show-form">
+                        <label for="">Show</label>
+                        <select name="show" class="filter-option">
+                            <option value="9" {% if show == '9' %}selected=""{% endif %}>9</option>
+                            <option value="18" {% if show == '18' %}selected=""{% endif %}>18</option>
+                            <option value="27" {% if show == '27' %}selected=""{% endif %}>27</option>
+                        </select>
+                    </div>
+                  
                 </form>
               </div>
               <div class="aa-product-catg-head-right">

@@ -61,6 +61,10 @@ class CategoryWiseProductListView(ListView):
             if key != 'page':
                 query_string += '&'+key + '=' + value
         
+        print(self.request.GET)
+
+        kwargs['sort'] = self.request.GET.get('sort', 'default')
+        kwargs['show'] = self.request.GET.get('show', 9)
         kwargs['category_id'] = self.category_id
         kwargs['sub_category_id'] = self.sub_category_id
         kwargs['query_string'] = query_string
@@ -76,12 +80,19 @@ class CategoryWiseProductListView(ListView):
         self.category_id = self.kwargs.get('category_id', None)
         self.sub_category_id = self.kwargs.get('sub_category_id', None)
 
-        if self.sub_category_id:
-            queryset = Product.objects.filter(category=self.sub_category_id, name__icontains=q, description__icontains=q)
-        elif self.category_id:
-            queryset = Product.objects.filter(category__parent=self.category_id, name__icontains=q, description__icontains=q)
+        if q:
+            lookups = Q(name__icontains=q) | Q(description__icontains=q)
         else:
-            queryset = Product.objects.filter(name__icontains=q, description__icontains=q)
+            lookups = Q()
+
+        if self.sub_category_id:
+            queryset = Product.objects.filter(
+                lookups, category=self.sub_category_id)
+        elif self.category_id:
+            queryset = Product.objects.filter(
+                lookups, category__parent=self.category_id)
+        else:
+            queryset = Product.objects.filter(lookups)
         
         queryset = queryset.order_by('-updated_at')
 
