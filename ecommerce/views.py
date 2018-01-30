@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 
 from categories.models import Category
 from products.models import Product
@@ -54,7 +55,6 @@ class CategoryWiseProductListView(ListView):
     context_object_name = 'products'
 
     def get_context_data(self, *args, **kwargs):
-        print(kwargs)
         kwargs['categories'] = self.categories
         query_string = ''
         for key, value in self.request.GET.items():
