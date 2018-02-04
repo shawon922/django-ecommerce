@@ -30,6 +30,10 @@
               <div class="aa-product-catg-head-left">
                 <form action=".">
                     <div class="aa-sort-form">
+                        {% if request.GET.q %}
+                            <input type="hidden" name="q" value="{{ request.GET.q }}">
+                        {% endif %}
+                        
                         <label for="">Sort by</label>
                         <select name="sort" class="filter-option">
                             <option value="default" {% if sort == 'default' %}selected=""{% endif %}>Default</option>

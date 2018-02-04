@@ -1,16 +1,20 @@
 from django import forms
 
 from categories.models import Category
+from tags.models import Tag
 from .models import Product
 
 
 class ProductForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
-        instance_data = kwargs.get('instance')
-        if instance_data:
-            self.fields['sub_category'].initial = instance_data.sub_category.id
+        self.label_suffix = ''
+
+        # instance_data = kwargs.get('instance')
         
+        # if instance_data:
+        #     self.fields['sub_category'].initial = instance_data.sub_category.id
+            # self.fields['tags'].initial = [tag.pk for tag in instance_data.tags.all()]
         # self.fields.keyOrder = ['name', 'category', 'description', 'price']
 
     category = forms.ChoiceField(
@@ -72,6 +76,16 @@ class ProductForm(forms.ModelForm):
         )
     )
     image = forms.ImageField(required=False)
+    tags = forms.MultipleChoiceField(
+        choices=Tag.objects.values_list('id', 'name'),
+        widget=forms.SelectMultiple(
+            attrs={
+                'class': 'form-control',
+                'id': 'id_tags'
+            }
+        ),
+        required=False
+    )
     featured = forms.BooleanField(
         required=False, 
         widget=forms.CheckboxInput()
@@ -80,11 +94,12 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product 
         fields = ['name', 'slug', 'description',
-                  'price', 'image', 'featured', 'category']
+                  'price', 'image', 'tags', 'featured', 'category']
 
 
     def clean(self, *args, **kwargs):
         sub_category = self.cleaned_data.get('sub_category')
+        tags = self.cleaned_data.get('tags')
         
         if sub_category:
             self.cleaned_data['category'] = Category.objects.get(pk=sub_category)

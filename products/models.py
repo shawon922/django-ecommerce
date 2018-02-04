@@ -7,6 +7,7 @@ from django.urls import reverse
 
 from .utils import unique_slug_generator
 from categories.models import Category
+from tags.models import Tag
 
 
 def upload_location(instance, filename):
@@ -33,6 +34,7 @@ class ProductManager(models.Manager):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
+    tags = models.ManyToManyField(to=Tag, related_name='tags', blank=True)
     name = models.CharField(max_length=120)
     slug = models.SlugField(blank=True, unique=True)
     description = models.TextField()

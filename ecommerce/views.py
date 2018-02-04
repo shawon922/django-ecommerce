@@ -51,7 +51,7 @@ def home(request):
 class CategoryWiseProductListView(ListView):
     model = Product
     template_name = 'products.html'
-    paginate_by = 1
+    paginate_by = 9
     context_object_name = 'products'
 
     def get_context_data(self, *args, **kwargs):
@@ -61,10 +61,10 @@ class CategoryWiseProductListView(ListView):
             if key != 'page':
                 query_string += '&'+key + '=' + value
         
-        print(self.request.GET)
+        # print(self.request.GET)
 
-        kwargs['sort'] = self.request.GET.get('sort', 'default')
-        kwargs['show'] = self.request.GET.get('show', 9)
+        kwargs['sort'] = self.sort
+        kwargs['show'] = self.show
         kwargs['category_id'] = self.category_id
         kwargs['sub_category_id'] = self.sub_category_id
         kwargs['query_string'] = query_string
@@ -72,6 +72,7 @@ class CategoryWiseProductListView(ListView):
         return super().get_context_data(*args, **kwargs)
 
     def get_queryset(self):
+        # print(dir(self))
         self.categories = Category.objects.prefetch_related('categories').filter(parent=None)
 
         q = self.request.GET.get('q', '')
@@ -80,8 +81,21 @@ class CategoryWiseProductListView(ListView):
         self.category_id = self.kwargs.get('category_id', None)
         self.sub_category_id = self.kwargs.get('sub_category_id', None)
 
+        self.sort = ordering = self.request.GET.get('sort', 'default')
+        self.show = self.request.GET.get('show', 9)
+
+        self.paginate_by = self.show
+        
+        if ordering == 'default' or ordering == 'date':
+            ordering = '-updated_at'
+
         if q:
-            lookups = Q(name__icontains=q) | Q(description__icontains=q)
+            lookups = (
+                        Q(name__icontains=q) 
+                        | Q(description__icontains=q)
+                        | Q(category__name__icontains=q)
+                        | Q(category__parent__name__icontains=q)
+                    )
         else:
             lookups = Q()
 
@@ -94,7 +108,7 @@ class CategoryWiseProductListView(ListView):
         else:
             queryset = Product.objects.filter(lookups)
         
-        queryset = queryset.order_by('-updated_at')
+        queryset = queryset.distinct().order_by(ordering)
 
         return queryset
 

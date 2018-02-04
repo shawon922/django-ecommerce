@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # local apps
     'categories',
     'products',
+    'tags',
 ]
 
 MIDDLEWARE = [

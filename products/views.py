@@ -62,6 +62,8 @@ def create(request):
         product = form.save(commit=False)
         product.save()
 
+        form.save_m2m()
+
         return redirect('products:index')
 
     context = {
@@ -80,10 +82,16 @@ def update(request, slug):
     else:
         product.category = product.category
 
-    form = ProductForm(request.POST or None, request.FILES or None, instance=product)
+    form = ProductForm(request.POST or None, request.FILES or None, instance=product, initial={
+                       'tags': [tag.pk for tag in product.tags.all()],
+                       'sub_category': product.sub_category.id
+                       })
+    
     if form.is_valid():
         product = form.save(commit=False)
         product.save()
+        
+        form.save_m2m()
 
         return redirect('products:index')
     context = {
